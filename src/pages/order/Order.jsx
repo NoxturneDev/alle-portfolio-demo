@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import styled from "styled-components"
+import axios from "axios"
 
 const FormContainer = styled.div`
   width: 100%;
@@ -171,32 +172,20 @@ const Order = () => {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // Generate order ID
-    const orderId = "ORD-" + Date.now()
-
-    // Get existing orders from localStorage
-    const existingOrders = JSON.parse(localStorage.getItem("orders") || "[]")
-
-    // Add new order
     const newOrder = {
-      id: orderId,
       ...formData,
       status: "pending",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-    }
+    };
 
-    existingOrders.push(newOrder)
-    localStorage.setItem("orders", JSON.stringify(existingOrders))
+    const response = await axios.post("http://localhost:8080/projects", newOrder);
 
-    setIsSubmitted(true)
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
+    if (response.status === 201) {
+      setIsSubmitted(true);
       setFormData({
         clientName: "",
         email: "",
@@ -209,8 +198,10 @@ const Order = () => {
         deadline: "",
         referenceFiles: "",
         additionalNotes: "",
-      })
-    }, 3000)
+      });
+    } else {
+      console.error("Failed to submit order");
+    }
   }
 
   if (isSubmitted) {
