@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router';
 import { ParallaxProvider } from 'react-scroll-parallax';
 import Threads from "../components/Threads";
 import ParallaxGallery from '../2d/ParallaxGallery';
+
 
 // This main wrapper creates the smooth background transition effect
 const AppWrapper = styled.div`
@@ -237,15 +239,7 @@ function App() {
           </ThreadsWrapper>
           <HeroSection>
             <HeaderNav>
-              <Logo>.T</Logo>
-              <NavMenu>
-                <LanguageSelector>
-                  EN <span>▾</span>
-                </LanguageSelector>
-                <HamburgerMenu>
-                  <div /><div /><div />
-                </HamburgerMenu>
-              </NavMenu>
+              <Logo>Alle</Logo>
             </HeaderNav>
 
             <HeroMainContent>
@@ -258,6 +252,9 @@ function App() {
                 I'm Alle, a web developer and designer who build modern, visually
                 appealing and clean websites.
               </HeroDescription>
+              <Link to="/order">
+                <div>Contact Me</div>
+              </Link>
             </HeroMainContent>
 
             <FooterBar>
